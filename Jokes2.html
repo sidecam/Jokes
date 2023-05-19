@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Jokes</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .joke {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .joke .setup {
+      font-weight: bold;
+    }
+    .joke .punchline {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Basic Jokes</h1>
+    <button id="new-joke">New Joke</button>
+    <div id="joke" class="joke"></div>
+  </div>
+  <script>
+    document.getElementById('new-joke').addEventListener('click', function() {
+      fetch('https://official-joke-api.appspot.com/random_joke')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('joke').innerHTML = 
+            `<div class="setup">${data.setup}</div>
+             <div class="punchline">${data.punchline}</div>`;
+        });
+    });
+  </script>
+</body>
+</html>
