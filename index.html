@@ -91,15 +91,16 @@
         .then(data => {
           // Hide loading state and show joke
           loadingElement.style.display = 'none';
-          jokeElement.style.display =I apologize for the cut-off, let's continue from where we left off:
-
-```html
-          'block';
+          jokeElement.style.display = 'block';
 
           jokeElement.innerHTML = 
             `<div class="setup">${data.setup}</div>
+             <div class="punchI apologize for the previous cut-off. Here is the rest of the HTML code:
+
+```html
              <div class="punchline">${data.punchline}</div>
-             <div class="favorite" onclick="addToFavorites(${JSON.stringify(data)})">❤️</div>`;
+             <span class="favorite">❤️</span>`;
+          document.querySelector('.favorite').addEventListener('click', () => addToFavorites(data));
         })
         .catch(e => {
           console.error(e);
