@@ -79,9 +79,6 @@
     newJokeButton.addEventListener('click', function() {
       // Show loading state
       loadingElement.style.display = 'block';
-jokeElement.style.display = 'none';
-
-```html
       jokeElement.style.display = 'none';
 
       fetch('https://official-joke-api.appspot.com/random_joke')
@@ -97,6 +94,7 @@ jokeElement.style.display = 'none';
           setupDiv.classList.add('setup');
           setupDiv.textContent = data.setup;
 
+```html
           const punchlineDiv = document.createElement('div');
           punchlineDiv.classList.add('punchline');
           punchlineDiv.textContent = data.punchline;
