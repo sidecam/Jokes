@@ -36,12 +36,14 @@
   <div class="container">
     <h1>Basic Jokes</h1>
     <button id="new-joke">New Joke</button>
+    <div id="loading" style="display: none;">Loading...</div>
     <div id="joke" class="joke"></div>
   </div>
   <script>
     document.getElementById('new-joke').addEventListener('click', function() {
-      // Display loading state
-      document.getElementById('joke').innerHTML = 'Loading joke...';
+      // Show loading state
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('joke').style.display = 'none';
 
       fetch('https://official-joke-api.appspot.com/random_joke')
         .then(response => {
@@ -51,12 +53,18 @@
           return response.json();
         })
         .then(data => {
+          // Hide loading state and show joke
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('joke').style.display = 'block';
+
           document.getElementById('joke').innerHTML = 
             `<div class="setup">${data.setup}</div>
              <div class="punchline">${data.punchline}</div>`;
         })
         .catch(e => {
           console.error(e);
+          // Hide loading state and show error message
+          document.getElementById('loading').style.display = 'none';
           document.getElementById('joke').innerHTML = 'Failed to load joke';
         });
     });
