@@ -92,4 +92,37 @@
           // Create the joke elements
           const setupDiv = document.createElement('div');
           setupDiv.classList.add('setup');
-          setupDiv.textContent =
+          setupDiv.textContent = data.setup;
+
+          const punchlineDiv = document.createElement('div');
+          punchlineDiv.classList.add('punchline');
+          punchlineDiv.textContent = data.punchline;
+
+          const favoriteSpan = document.createElement('span');
+          favoriteSpan.classList.add('favorite');
+          favoriteSpan.textContent = '❤️';
+          favoriteSpan.addEventListener('click', () => addToFavorites(data));
+
+          // Clear old joke and add new joke
+          jokeElement.innerHTML = '';
+          jokeElement.appendChild(setupDiv);
+          jokeElement.appendChild(punchlineDiv);
+          jokeElement.appendChild(favoriteSpan);
+
+          // Hide loading state and show joke
+          loadingElement.style.display = 'none';
+          jokeElement.style.display = 'block';
+        })
+        .catch(e => {
+          console.error(e);
+          // Hide loading state and show error message
+          loadingElement.style.display = 'none';
+          jokeElement.innerHTML = 'Failed to load joke';
+        });
+    });
+
+    renderFavorites();
+  </script>
+</body>
+</html>
+
