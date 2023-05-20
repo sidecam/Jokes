@@ -95,12 +95,18 @@
 
           jokeElement.innerHTML = 
             `<div class="setup">${data.setup}</div>
-             <div class="punchI apologize for the previous cut-off. Here is the rest of the HTML code:
+             <div class="punchline">${dataApologies for the confusion earlier. Let's complete the JavaScript code in your HTML file. You need to append the event listener for the favorite button after the HTML for the joke and the favorite button has been added to the page. This can be achieved by adding a callback to a setTimeout function, ensuring the event listener is attached after the HTML for the joke and the button has been rendered. 
+
+Here's the corrected JavaScript code snippet:
 
 ```html
+          jokeElement.innerHTML = 
+            `<div class="setup">${data.setup}</div>
              <div class="punchline">${data.punchline}</div>
              <span class="favorite">❤️</span>`;
-          document.querySelector('.favorite').addEventListener('click', () => addToFavorites(data));
+          setTimeout(() => {
+            document.querySelector('.favorite').addEventListener('click', () => addToFavorites(data));
+          }, 0);
         })
         .catch(e => {
           console.error(e);
