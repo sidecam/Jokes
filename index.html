@@ -40,12 +40,24 @@
   </div>
   <script>
     document.getElementById('new-joke').addEventListener('click', function() {
+      // Display loading state
+      document.getElementById('joke').innerHTML = 'Loading joke...';
+
       fetch('https://official-joke-api.appspot.com/random_joke')
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.json();
+        })
         .then(data => {
           document.getElementById('joke').innerHTML = 
             `<div class="setup">${data.setup}</div>
              <div class="punchline">${data.punchline}</div>`;
+        })
+        .catch(e => {
+          console.error(e);
+          document.getElementById('joke').innerHTML = 'Failed to load joke';
         });
     });
   </script>
