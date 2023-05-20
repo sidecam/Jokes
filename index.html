@@ -79,6 +79,9 @@
     newJokeButton.addEventListener('click', function() {
       // Show loading state
       loadingElement.style.display = 'block';
+      jokeElement.style.displayI apologize for the previous cut-off. Here is the rest of the JavaScript code:
+
+```html
       jokeElement.style.display = 'none';
 
       fetch('https://official-joke-api.appspot.com/random_joke')
@@ -89,24 +92,29 @@
           return response.json();
         })
         .then(data => {
+          // Create the joke elements
+          const setupDiv = document.createElement('div');
+          setupDiv.classList.add('setup');
+          setupDiv.textContent = data.setup;
+
+          const punchlineDiv = document.createElement('div');
+          punchlineDiv.classList.add('punchline');
+          punchlineDiv.textContent = data.punchline;
+
+          const favoriteSpan = document.createElement('span');
+          favoriteSpan.classList.add('favorite');
+          favoriteSpan.textContent = '❤️';
+          favoriteSpan.addEventListener('click', () => addToFavorites(data));
+
+          // Clear old joke and add new joke
+          jokeElement.innerHTML = '';
+          jokeElement.appendChild(setupDiv);
+          jokeElement.appendChild(punchlineDiv);
+          jokeElement.appendChild(favoriteSpan);
+
           // Hide loading state and show joke
           loadingElement.style.display = 'none';
           jokeElement.style.display = 'block';
-
-          jokeElement.innerHTML = 
-            `<div class="setup">${data.setup}</div>
-             <div class="punchline">${dataApologies for the confusion earlier. Let's complete the JavaScript code in your HTML file. You need to append the event listener for the favorite button after the HTML for the joke and the favorite button has been added to the page. This can be achieved by adding a callback to a setTimeout function, ensuring the event listener is attached after the HTML for the joke and the button has been rendered. 
-
-Here's the corrected JavaScript code snippet:
-
-```html
-          jokeElement.innerHTML = 
-            `<div class="setup">${data.setup}</div>
-             <div class="punchline">${data.punchline}</div>
-             <span class="favorite">❤️</span>`;
-          setTimeout(() => {
-            document.querySelector('.favorite').addEventListener('click', () => addToFavorites(data));
-          }, 0);
         })
         .catch(e => {
           console.error(e);
