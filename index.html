@@ -38,6 +38,12 @@
     .joke .punchline {
       margin-top: 10px;
     }
+    .favorite {
+      cursor: pointer;
+      color: red;
+      display: inline-block;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
@@ -46,12 +52,34 @@
     <button id="new-joke">New Joke</button>
     <div id="loading" style="display: none;">Loading...</div>
     <div id="joke" class="joke"></div>
+    <div id="favorites" class="favorites"></div>
   </div>
   <script>
-    document.getElementById('new-joke').addEventListener('click', function() {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const favoriteElement = document.getElementById('favorites');
+    const jokeElement = document.getElementById('joke');
+    const loadingElement = document.getElementById('loading');
+    const newJokeButton = document.getElementById('new-joke');
+
+    function renderFavorites() {
+      favoriteElement.innerHTML = favorites
+        .map(joke => `<div class="joke">
+            <div class="setup">${joke.setup}</div>
+            <div class="punchline">${joke.punchline}</div>
+          </div>`)
+        .join('');
+    }
+
+    function addToFavorites(joke) {
+      favorites.push(joke);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      renderFavorites();
+    }
+
+    newJokeButton.addEventListener('click', function() {
       // Show loading state
-      document.getElementById('loading').style.display = 'block';
-      document.getElementById('joke').style.display = 'none';
+      loadingElement.style.display = 'block';
+      jokeElement.style.display = 'none';
 
       fetch('https://official-joke-api.appspot.com/random_joke')
         .then(response => {
@@ -62,20 +90,26 @@
         })
         .then(data => {
           // Hide loading state and show joke
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('joke').style.display = 'block';
+          loadingElement.style.display = 'none';
+          jokeElement.style.display =I apologize for the cut-off, let's continue from where we left off:
 
-          document.getElementById('joke').innerHTML = 
+```html
+          'block';
+
+          jokeElement.innerHTML = 
             `<div class="setup">${data.setup}</div>
-             <div class="punchline">${data.punchline}</div>`;
+             <div class="punchline">${data.punchline}</div>
+             <div class="favorite" onclick="addToFavorites(${JSON.stringify(data)})">❤️</div>`;
         })
         .catch(e => {
           console.error(e);
           // Hide loading state and show error message
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('joke').innerHTML = 'Failed to load joke';
+          loadingElement.style.display = 'none';
+          jokeElement.innerHTML = 'Failed to load joke';
         });
     });
+
+    renderFavorites();
   </script>
 </body>
 </html>
