@@ -38,6 +38,12 @@
     .joke .punchline {
       margin-top: 10px;
     }
+    .favorite {
+      cursor: pointer;
+      color: red;
+      display: inline-block;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
@@ -46,11 +52,29 @@
     <button id="new-joke">New Joke</button>
     <div id="loading" style="display: none;">Loading...</div>
     <div id="joke" class="joke"></div>
+    <div id="favorites" class="favorites"></div>
   </div>
   <script>
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const favoriteElement = document.getElementById('favorites');
     const jokeElement = document.getElementById('joke');
     const loadingElement = document.getElementById('loading');
     const newJokeButton = document.getElementById('new-joke');
+
+    function renderFavorites() {
+      favoriteElement.innerHTML = favorites
+        .map(joke => `<div class="joke">
+            <div class="setup">${joke.setup}</div>
+            <div class="punchline">${joke.punchline}</div>
+          </div>`)
+        .join('');
+    }
+
+    function addToFavorites(joke) {
+      favorites.push(joke);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      renderFavorites();
+    }
 
     newJokeButton.addEventListener('click', function() {
       // Show loading state
@@ -74,10 +98,16 @@
           punchlineDiv.classList.add('punchline');
           punchlineDiv.textContent = data.punchline;
 
+          const favoriteSpan = document.createElement('span');
+          favoriteSpan.classList.add('favorite');
+          favoriteSpan.textContent = '❤️';
+          favoriteSpan.addEventListener('click', () => addToFavorites(data));
+
           // Clear old joke and add new joke
           jokeElement.innerHTML = '';
           jokeElement.appendChild(setupDiv);
           jokeElement.appendChild(punchlineDiv);
+          jokeElement.appendChild(favoriteSpan);
 
           // Hide loading state and show joke
           loadingElement.style.display = 'none';
@@ -90,6 +120,8 @@
           jokeElement.innerHTML = 'Failed to load joke';
         });
     });
+
+    renderFavorites();
   </script>
 </body>
 </html>
